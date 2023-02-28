@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const render = require("./src/page-template.js");
 const questions = require("./questions/questions.js");
-const html = [];
+const htmlList = [];
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -16,46 +16,36 @@ async function managerInput() {
   const managerQ = await inquirer.prompt(questions).then(function (userInput) {
     const { name, id, email, officeNumber } = userInput;
     const manager = new Manager(name, id, email, officeNumber);
-    html.push(manager);
+    htmlList.push(manager);
     console.log("// Add Engineer to your team //");
   });
-
   questions[3].name = "GitHub username";
   questions[3].message = "Add GitHub username. ";
 
   const engineerQ = await inquirer.prompt(questions).then(function (userInput) {
     const { name, id, email, gitHubUsername } = userInput;
     const engineer = new Engineer(name, id, email, gitHubUsername);
-    html.push(engineer);
+    htmlList.push(engineer);
   });
   questions[3].name = "School";
   questions[3].message = "Add School. ";
   const internQ = await inquirer.prompt(questions).then(function (userInput) {
     const { name, id, email, school } = userInput;
     const intern = new Intern(name, id, email, school);
-    html.push(intern);
+    htmlList.push(intern);
   });
   function printDoc() {
     if (!fs.existsSync(OUTPUT_DIR)) {
       fs.mkdirSync(OUTPUT_DIR);
     }
 
-    fs.writeFile(outputPath, render(html), (err) => {
+    fs.writeFile(outputPath, render(htmlList), (err) => {
       if (err) throw err;
       console.log(`You can find your new file here: ${OUTPUT_DIR}`);
     });
   }
-  printDoc({ employees: html });
+
+  printDoc({ employees: htmlList });
 }
 
 managerInput();
-
-// Call the render function (provided for you) and pass in an array containing all employee objects.
-
-// The render function will generate and return a block of HTML including templated div elements for each employee.
-
-// Create an HTML file using the HTML returned from the render function.
-
-// Write it to a file named team.html in the output folder.
-
-// You can use the provided variable outputPath to target this location.

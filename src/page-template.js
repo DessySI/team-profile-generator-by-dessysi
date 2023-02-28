@@ -1,8 +1,6 @@
-// creates the team
-const generateTeam = (team) => {
-  // creates the manager html
-  const generateManager = (manager) => {
-    return `
+// creates the manager html
+const generateManager = (manager) => {
+  return `
         <div class="card employee-card">
         <div class="card-header">
             <h2 class="card-title">${manager.getName()}</h2>
@@ -11,17 +9,17 @@ const generateTeam = (team) => {
         <div class="card-body">
             <ul class="list-group">
                 <li class="list-group-item">ID: ${manager.getId()}</li>
-                <li class="list-group-item">Email: <a href="mailto:${manager.getEmail()}">${manager.getEmail()}</a></li>
+                <li class="list-group-item">Email: ${manager.getEmail()}</li>
                 <li class="list-group-item">Office number: ${manager.getOfficeNumber()}</li>
             </ul>
         </div>
     </div>
         `;
-  };
+};
 
-  // creates the html for engineers
-  const generateEngineer = (engineer) => {
-    return `
+// creates the html for engineers
+const generateEngineer = (engineer) => {
+  return `
         <div class="card employee-card">
     <div class="card-header">
         <h2 class="card-title">${engineer.getName()}</h2>
@@ -30,18 +28,18 @@ const generateTeam = (team) => {
     <div class="card-body">
         <ul class="list-group">
             <li class="list-group-item">ID: ${engineer.getId()}</li>
-            <li class="list-group-item">Email: <a href="mailto:${engineer.getEmail()}">${engineer.getEmail()}</a></li>
-            <li class="list-group-item">GitHub: <a href="https://github.com/${engineer.getGithub()}" target="_blank" rel="noopener noreferrer">${engineer.getGithub()}</a></li>
+            <li class="list-group-item">Email: ${engineer.getEmail()}</li>
+            <li class="list-group-item">GitHub: ${engineer.getGithub()}</li>
         </ul>
     </div>
 </div>
         `;
-  };
+};
 
-  // creates the html for interns
-  const generateIntern = (intern) => {
-    return `
-<div class="card employee-card">
+// creates the html for interns
+const generateIntern = (intern) => {
+  return `
+        <div class="card employee-card">
     <div class="card-header">
         <h2 class="card-title">${intern.getName()}</h2>
         <h3 class="card-title"><i class="fas fa-user-graduate mr-2"></i>${intern.getRole()}</h3>
@@ -49,39 +47,42 @@ const generateTeam = (team) => {
     <div class="card-body">
         <ul class="list-group">
             <li class="list-group-item">ID: ${intern.getId()}</li>
-            <li class="list-group-item">Email: <a href="mailto:${intern.getEmail()}">${intern.getEmail()}</a></li>
+            <li class="list-group-item">Email: ${intern.getEmail()} </li>
             <li class="list-group-item">School: ${intern.getSchool()}</li>
         </ul>
     </div>
 </div>
         `;
-  };
-
+};
+// creates the cards for the team
+const generateTeam = (team) => {
   const html = [];
 
-  html.push(
-    team
-      .filter((employee) => employee.getRole() === "Manager")
-      .map((manager) => generateManager(manager))
-  );
-  html.push(
-    team
-      .filter((employee) => employee.getRole() === "Engineer")
-      .map((engineer) => generateEngineer(engineer))
-      .join("")
-  );
-  html.push(
-    team
-      .filter((employee) => employee.getRole() === "Intern")
-      .map((intern) => generateIntern(intern))
-      .join("")
-  );
+  for (let i = 0; i < team.length; i++) {
+    const employee = team[i];
+    const role = employee.getRole();
 
+    if (role === "Manager") {
+      const addManager = generateManager(employee);
+      html.push(addManager);
+    }
+
+    if (role === "Engineer") {
+      const addEngineer = generateEngineer(employee);
+      html.push(addEngineer);
+    }
+
+    if (role === "Intern") {
+      const addIntern = generateIntern(employee);
+      html.push(addIntern);
+    }
+  }
+
+  // return the generated HTML string instead of calling generateTeam again
   return html.join("");
 };
-
 // exports function to generate entire page
-module.exports = (team) => {
+const generateTeamPage = function (newTeam) {
   return `
     <!DOCTYPE html>
 <html lang="en">
@@ -108,7 +109,7 @@ module.exports = (team) => {
     <div class="container">
         <div class="row">
             <div class="team-area col-12 d-flex justify-content-center">
-                ${generateTeam(team)}
+                ${generateTeam(newTeam)}
             </div>
         </div>
     </div>
@@ -116,6 +117,4 @@ module.exports = (team) => {
 </html>
     `;
 };
-
-// export to index
-module.exports = generateTeam;
+module.exports = generateTeamPage;
