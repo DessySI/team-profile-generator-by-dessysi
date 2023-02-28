@@ -35,18 +35,17 @@ async function managerInput() {
     const intern = new Intern(name, id, email, school);
     html.push(intern);
   });
-  (function generateHTML() {
-    (function printDoc() {
-      if (!fs.existsSync(OUTPUT_DIR)) {
-        fs.mkdirSync(OUTPUT_DIR);
-      }
+  function printDoc() {
+    if (!fs.existsSync(OUTPUT_DIR)) {
+      fs.mkdirSync(OUTPUT_DIR);
+    }
 
-      fs.writeFile(outputPath, render(userInput), (err) => {
-        if (err) throw err;
-        console.log(`You can find your new file here: ${OUTPUT_DIR}`);
-      });
+    fs.writeFile(outputPath, render(html), (err) => {
+      if (err) throw err;
+      console.log(`You can find your new file here: ${OUTPUT_DIR}`);
     });
-  });
+  }
+  printDoc({ employees: html });
 }
 
 managerInput();
