@@ -24,7 +24,7 @@ Based on provided starter code which includes tests, assets, lib, src and index.
 
 ## Report issues
 
-To report bugs or other issues with your ReadMe project, it's best to reach out to https://github.com/DessySI and create a new issue.
+To report bugs or other issues with your project, it's best to reach out to https://github.com/DessySI and create a new issue.
 
 ## Contributions
 
