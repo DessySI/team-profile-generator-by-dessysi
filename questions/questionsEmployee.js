@@ -18,7 +18,7 @@ module.exports = [
     },
     when: (answers) => {
       // only ask for age if name is provided
-      return answers.menu == "Add an Engineer" || "Add an Intern";
+      return answers.menu !== "Finish building the Team";
     },
   },
   {
@@ -34,7 +34,7 @@ module.exports = [
     },
     when: (answers) => {
       // only ask for age if name is provided
-      return answers.menu == "Add an Engineer" || "Add an Intern";
+      return answers.menu !== "Finish building the Team";
     },
   },
   {
@@ -50,7 +50,7 @@ module.exports = [
     },
     when: (answers) => {
       // only ask for age if name is provided
-      return answers.menu == "Add an Engineer" || "Add an Intern";
+      return answers.menu !== "Finish building the Team";
     },
   },
   {
