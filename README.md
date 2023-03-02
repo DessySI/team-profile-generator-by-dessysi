@@ -19,8 +19,8 @@ Based on provided starter code which includes tests, assets, lib, src and index.
 
 ## Image:
 
-- this is only a template image, which was provided for this assignment.
-  ![alt text](assets/14-object-oriented-programming-challenge-demo.png)
+- Output-demo image:
+  ![alt text](assets/team_profile_generator_output_demo.png)
 
 ## Report issues
 
