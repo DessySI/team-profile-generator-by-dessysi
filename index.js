@@ -6,46 +6,56 @@ const path = require("path");
 const fs = require("fs");
 const render = require("./src/page-template.js");
 const questions = require("./questions/questions.js");
+const questionsEmployee = require("./questions/questionsEmployee.js");
 const htmlList = [];
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// function that uses Inquirer to gather information about the development team members and creates objects for each team member using the correct classes as blueprints.
-async function managerInput() {
-  console.log("// Add Manager to your team //");
-  const managerQ = await inquirer.prompt(questions).then(function (userInput) {
-    const { name, id, email, officeNumber } = userInput;
-    const manager = new Manager(name, id, email, officeNumber);
-    htmlList.push(manager);
-    console.log("// Add Engineer to your team //");
-  });
-  questions[3].name = "GitHub username";
-  questions[3].message = "Add GitHub username. ";
-
-  const engineerQ = await inquirer.prompt(questions).then(function (userInput) {
-    const { name, id, email, gitHubUsername } = userInput;
-    const engineer = new Engineer(name, id, email, gitHubUsername);
-    htmlList.push(engineer);
-  });
-  questions[3].name = "School";
-  questions[3].message = "Add School. ";
-  const internQ = await inquirer.prompt(questions).then(function (userInput) {
-    const { name, id, email, school } = userInput;
-    const intern = new Intern(name, id, email, school);
-    htmlList.push(intern);
-  });
-  function printDoc() {
-    if (!fs.existsSync(OUTPUT_DIR)) {
-      fs.mkdirSync(OUTPUT_DIR);
-    }
-
-    fs.writeFile(outputPath, render(htmlList), (err) => {
-      if (err) throw err;
-      console.log(`You can find your new file here: ${OUTPUT_DIR}`);
-    });
+// Create the output directory if it doesn't exist
+const printDoc = async () => {
+  if (!fs.existsSync(OUTPUT_DIR)) {
+    fs.mkdirSync(OUTPUT_DIR);
   }
 
-  printDoc({ employees: htmlList });
-}
+  // Write the HTML file to the output directory using the render function and the htmlList array
+  fs.writeFile(outputPath, render(htmlList), (err) => {
+    if (err) throw err;
+    console.log(`You can find your new file here: ${OUTPUT_DIR}`);
+  });
+};
 
-managerInput();
+const startQuestions = async () => {
+  // Prompt the user for the manager's information and create a new Manager object
+  console.log("// Add Manager to your team //");
+  const answers = await inquirer.prompt(questions);
+  const { name, employeeID, emailAddress, officeNumber } = answers;
+  const manager = new Manager(name, employeeID, emailAddress, officeNumber);
+  htmlList.push(manager);
+
+  // Prompt the user for the type of employee to add and their information, and create a new object of the appropriate type
+  let menu = "";
+  while (menu !== "Finish building the Team") {
+    console.log("// Add Employee to your team //");
+    const menuAnswer = await inquirer.prompt(questionsEmployee);
+    menu = menuAnswer.menu;
+    const { name, employeeID, emailAddress, gitHub, school } = menuAnswer;
+    switch (menu) {
+      case "Add an Engineer":
+        const engineer = new Engineer(name, employeeID, emailAddress, gitHub);
+        htmlList.push(engineer);
+        break;
+      case "Add an Intern":
+        const intern = new Intern(name, employeeID, emailAddress, school);
+        htmlList.push(intern);
+        break;
+      case "Finish building the Team":
+        break;
+      default:
+        console.log("Invalid menu option selected.");
+        break;
+    }
+  }
+  // Call the printDoc function to generate the HTML file
+  printDoc();
+};
+startQuestions();
