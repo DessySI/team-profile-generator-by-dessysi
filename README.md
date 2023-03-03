@@ -28,8 +28,11 @@ To report bugs or other issues with your project, it's best to reach out to http
 
 ## Contributions
 
-Please follow the guide listed here:
-https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/setting-guidelines-for-repository-contributors
+Please follow the guide : 
+ - Fork the project, you can do that by clicking on the "Fork" button in the top right corner of the page.
+ - Make changes in your forked repository.
+ - Once you are happy with the code you can create a pull request. To create the pull request , navigate to the original GitHub page and click on the "New pull request" button. Select your forked repository, then click on "Create pull request". Write a description of your changes and submit the pull request. 
+ - Wait for review and merge: We will review your pull request and give feedback if necessary. Once your pull request is approved, it will be merged into the main branch of the repository.
 
 ## License
 
