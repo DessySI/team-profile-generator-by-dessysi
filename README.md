@@ -13,7 +13,7 @@ Based on provided starter code which includes tests, assets, lib, src and index.
 
 ## Usage
 
-- Execute the following command to start generating a new readme file: $ npm  
+- Execute the following command to start generating your team file: $ npm  
   node index.js
 - Once all questions are answered a new html file will be generated and pleaced in a folder "output" and a path to it will appear on your terminal.
 
